@@ -14,10 +14,13 @@ public class AuthController : ControllerBase
     {
         _authService = authService;
     }
-
-    /// <summary>
-    /// Register a new user
-    /// </summary>
+/// <summary>
+/// Register a new user account
+/// </summary>
+/// <param name="registerDto">User registration details</param>
+/// <returns>JWT token and user information</returns>
+/// <response code="201">User registered successfully</response>
+/// <response code="400">Username or email already exists</response>
     [HttpPost("register")]
     [ProducesResponseType(typeof(ApiResponse<LoginResponseDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
@@ -33,10 +36,14 @@ public class AuthController : ControllerBase
         });
     }
 
-    /// <summary>
-    /// Login with username and password
-    /// </summary>
-    [HttpPost("login")]
+        /// <summary>
+        /// Login with username and password
+        /// </summary>
+        /// <param name="loginDto">Login credentials</param>
+        /// <returns>JWT token and user information</returns>
+        /// <response code="200">Login successful</response>
+        /// <response code="401">Invalid credentials</response>
+        [HttpPost("login")]
     [ProducesResponseType(typeof(ApiResponse<LoginResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Login([FromBody] LoginDto loginDto)

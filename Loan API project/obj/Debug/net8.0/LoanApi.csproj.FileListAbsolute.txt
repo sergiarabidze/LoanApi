@@ -90,3 +90,6 @@ C:\Users\sergi\source\repos\Loan API project\Loan API project\obj\Debug\net8.0\r
 C:\Users\sergi\source\repos\Loan API project\Loan API project\obj\Debug\net8.0\LoanApi.pdb
 C:\Users\sergi\source\repos\Loan API project\Loan API project\obj\Debug\net8.0\LoanApi.genruntimeconfig.cache
 C:\Users\sergi\source\repos\Loan API project\Loan API project\obj\Debug\net8.0\ref\LoanApi.dll
+C:\Users\sergi\source\repos\Loan API project\Loan API project\bin\Debug\net8.0\LoanApi.xml
+C:\Users\sergi\source\repos\Loan API project\Loan API project\obj\Debug\net8.0\LoanApi.sourcelink.json
+C:\Users\sergi\source\repos\Loan API project\Loan API project\obj\Debug\net8.0\LoanApi.xml

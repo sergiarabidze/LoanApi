@@ -1,3 +1,4 @@
+﻿using System.Reflection;
 using System.Text;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -84,7 +85,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Loan API",
         Version = "v1",
-        Description = "???????? ??????? API - Loan Management System",
+        Description = "Loan Management System API - Loan Management System",
         Contact = new OpenApiContact
         {
             Name = "Loan API Team",
@@ -117,10 +118,12 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 
-    // Add XML comments if you create them
-    // var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    // c.IncludeXmlComments(xmlPath);
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        c.IncludeXmlComments(xmlPath);
+    }
 });
 
 // CORS (if needed for frontend)

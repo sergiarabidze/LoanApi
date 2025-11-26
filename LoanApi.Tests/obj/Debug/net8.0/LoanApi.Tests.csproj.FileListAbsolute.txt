@@ -167,3 +167,5 @@ C:\Users\sergi\source\repos\Loan API project\LoanApi.Tests\obj\Debug\net8.0\refi
 C:\Users\sergi\source\repos\Loan API project\LoanApi.Tests\obj\Debug\net8.0\LoanApi.Tests.pdb
 C:\Users\sergi\source\repos\Loan API project\LoanApi.Tests\obj\Debug\net8.0\LoanApi.Tests.genruntimeconfig.cache
 C:\Users\sergi\source\repos\Loan API project\LoanApi.Tests\obj\Debug\net8.0\ref\LoanApi.Tests.dll
+C:\Users\sergi\source\repos\Loan API project\LoanApi.Tests\bin\Debug\net8.0\LoanApi.xml
+C:\Users\sergi\source\repos\Loan API project\LoanApi.Tests\obj\Debug\net8.0\LoanApi.Tests.sourcelink.json

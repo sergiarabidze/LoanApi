@@ -15,6 +15,7 @@
         "tags": [
           "Accountant"
         ],
+        "summary": "Get all loans (Accountant only)",
         "responses": {
           "200": {
             "description": "OK",
@@ -44,6 +45,7 @@
         "tags": [
           "Accountant"
         ],
+        "summary": "Get any loan by ID (Accountant only)",
         "parameters": [
           {
             "name": "id",
@@ -102,6 +104,7 @@
         "tags": [
           "Accountant"
         ],
+        "summary": "Update any loan (Accountant only)",
         "parameters": [
           {
             "name": "id",
@@ -179,6 +182,7 @@
         "tags": [
           "Accountant"
         ],
+        "summary": "Delete any loan (Accountant only)",
         "parameters": [
           {
             "name": "id",
@@ -239,6 +243,7 @@
         "tags": [
           "Accountant"
         ],
+        "summary": "Update loan status (Accountant only)",
         "parameters": [
           {
             "name": "id",
@@ -318,6 +323,7 @@
         "tags": [
           "Accountant"
         ],
+        "summary": "Block a user (Accountant only)",
         "parameters": [
           {
             "name": "id",
@@ -376,6 +382,7 @@
         "tags": [
           "Accountant"
         ],
+        "summary": "Toggle user block status (Accountant only)",
         "parameters": [
           {
             "name": "id",
@@ -455,6 +462,7 @@
         "tags": [
           "Accountant"
         ],
+        "summary": "Unblock a user (Accountant only)",
         "parameters": [
           {
             "name": "id",
@@ -515,7 +523,9 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Register a new user account",
         "requestBody": {
+          "description": "User registration details",
           "content": {
             "application/json": {
               "schema": {
@@ -536,7 +546,7 @@
         },
         "responses": {
           "201": {
-            "description": "Created",
+            "description": "User registered successfully",
             "content": {
               "text/plain": {
                 "schema": {
@@ -556,7 +566,7 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "Username or email already exists",
             "content": {
               "text/plain": {
                 "schema": {
@@ -583,7 +593,9 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Login with username and password",
         "requestBody": {
+          "description": "Login credentials",
           "content": {
             "application/json": {
               "schema": {
@@ -604,7 +616,7 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Login successful",
             "content": {
               "text/plain": {
                 "schema": {
@@ -624,7 +636,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Invalid credentials",
             "content": {
               "text/plain": {
                 "schema": {
@@ -651,6 +663,7 @@
         "tags": [
           "Loan"
         ],
+        "summary": "Create a new loan application",
         "requestBody": {
           "content": {
             "application/json": {
@@ -737,6 +750,7 @@
         "tags": [
           "Loan"
         ],
+        "summary": "Get all loans for the current user",
         "responses": {
           "200": {
             "description": "OK",
@@ -766,6 +780,7 @@
         "tags": [
           "Loan"
         ],
+        "summary": "Get a specific loan by ID (only user's own loans)",
         "parameters": [
           {
             "name": "id",
@@ -844,6 +859,7 @@
         "tags": [
           "Loan"
         ],
+        "summary": "Update a loan (only if status is InProcess)",
         "parameters": [
           {
             "name": "id",
@@ -961,6 +977,7 @@
         "tags": [
           "Loan"
         ],
+        "summary": "Delete a loan (only if status is InProcess)",
         "parameters": [
           {
             "name": "id",
@@ -1061,6 +1078,7 @@
         "tags": [
           "User"
         ],
+        "summary": "Get current logged-in user information",
         "responses": {
           "200": {
             "description": "OK",
@@ -1110,6 +1128,7 @@
         "tags": [
           "User"
         ],
+        "summary": "Get user by ID (Accessible to authenticated users for their own profile)",
         "parameters": [
           {
             "name": "id",
