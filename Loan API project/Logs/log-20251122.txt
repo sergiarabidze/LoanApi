@@ -1,0 +1,69 @@
+2025-11-22 23:34:11.063 +04:00 [INF] Executed DbCommand (156ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [LoanApiDb];
+2025-11-22 23:34:11.192 +04:00 [INF] Executed DbCommand (72ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [LoanApiDb] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2025-11-22 23:34:11.218 +04:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-22 23:34:11.294 +04:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2025-11-22 23:34:11.296 +04:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-22 23:34:11.315 +04:00 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-22 23:34:11.322 +04:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-11-22 23:34:11.339 +04:00 [INF] Applying migration '20251122193342_InitialCreate'.
+2025-11-22 23:34:11.419 +04:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [FirstName] nvarchar(100) NOT NULL,
+    [LastName] nvarchar(100) NOT NULL,
+    [Username] nvarchar(50) NOT NULL,
+    [Age] int NOT NULL,
+    [Email] nvarchar(100) NOT NULL,
+    [MonthlyIncome] decimal(18,2) NOT NULL,
+    [IsBlocked] bit NOT NULL,
+    [PasswordHash] nvarchar(max) NOT NULL,
+    [Role] nvarchar(20) NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+2025-11-22 23:34:11.422 +04:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Loans] (
+    [Id] int NOT NULL IDENTITY,
+    [LoanType] int NOT NULL,
+    [Amount] decimal(18,2) NOT NULL,
+    [Currency] int NOT NULL,
+    [Period] int NOT NULL,
+    [Status] int NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_Loans] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Loans_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2025-11-22 23:34:11.483 +04:00 [INF] Executed DbCommand (61ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Age', N'CreatedAt', N'Email', N'FirstName', N'IsBlocked', N'LastName', N'MonthlyIncome', N'PasswordHash', N'Role', N'Username') AND [object_id] = OBJECT_ID(N'[Users]'))
+    SET IDENTITY_INSERT [Users] ON;
+INSERT INTO [Users] ([Id], [Age], [CreatedAt], [Email], [FirstName], [IsBlocked], [LastName], [MonthlyIncome], [PasswordHash], [Role], [Username])
+VALUES (1, 30, '2025-11-22T19:33:42.7164445Z', N'accountant@loanapi.com', N'Admin', CAST(0 AS bit), N'Accountant', 5000.0, N'$2a$11$YQe5YbOOIax.8tjXMZrO8OBQ97wRzM99KIgWAh3MThwyNNDl.Enlm', N'Accountant', N'accountant');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Age', N'CreatedAt', N'Email', N'FirstName', N'IsBlocked', N'LastName', N'MonthlyIncome', N'PasswordHash', N'Role', N'Username') AND [object_id] = OBJECT_ID(N'[Users]'))
+    SET IDENTITY_INSERT [Users] OFF;
+2025-11-22 23:34:11.485 +04:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Loans_UserId] ON [Loans] ([UserId]);
+2025-11-22 23:34:11.489 +04:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Users_Email] ON [Users] ([Email]);
+2025-11-22 23:34:11.492 +04:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Users_Username] ON [Users] ([Username]);
+2025-11-22 23:34:11.494 +04:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20251122193342_InitialCreate', N'7.0.0');

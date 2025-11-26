@@ -1,0 +1,153 @@
+2025-11-22 23:34:11.063 +04:00 [INF] Executed DbCommand (156ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [LoanApiDb];
+2025-11-22 23:34:11.192 +04:00 [INF] Executed DbCommand (72ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [LoanApiDb] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2025-11-22 23:34:11.218 +04:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-22 23:34:11.294 +04:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2025-11-22 23:34:11.296 +04:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-22 23:34:11.315 +04:00 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-22 23:34:11.322 +04:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-11-22 23:34:11.339 +04:00 [INF] Applying migration '20251122193342_InitialCreate'.
+2025-11-22 23:34:11.419 +04:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [FirstName] nvarchar(100) NOT NULL,
+    [LastName] nvarchar(100) NOT NULL,
+    [Username] nvarchar(50) NOT NULL,
+    [Age] int NOT NULL,
+    [Email] nvarchar(100) NOT NULL,
+    [MonthlyIncome] decimal(18,2) NOT NULL,
+    [IsBlocked] bit NOT NULL,
+    [PasswordHash] nvarchar(max) NOT NULL,
+    [Role] nvarchar(20) NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+2025-11-22 23:34:11.422 +04:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Loans] (
+    [Id] int NOT NULL IDENTITY,
+    [LoanType] int NOT NULL,
+    [Amount] decimal(18,2) NOT NULL,
+    [Currency] int NOT NULL,
+    [Period] int NOT NULL,
+    [Status] int NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_Loans] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Loans_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2025-11-22 23:34:11.483 +04:00 [INF] Executed DbCommand (61ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Age', N'CreatedAt', N'Email', N'FirstName', N'IsBlocked', N'LastName', N'MonthlyIncome', N'PasswordHash', N'Role', N'Username') AND [object_id] = OBJECT_ID(N'[Users]'))
+    SET IDENTITY_INSERT [Users] ON;
+INSERT INTO [Users] ([Id], [Age], [CreatedAt], [Email], [FirstName], [IsBlocked], [LastName], [MonthlyIncome], [PasswordHash], [Role], [Username])
+VALUES (1, 30, '2025-11-22T19:33:42.7164445Z', N'accountant@loanapi.com', N'Admin', CAST(0 AS bit), N'Accountant', 5000.0, N'$2a$11$YQe5YbOOIax.8tjXMZrO8OBQ97wRzM99KIgWAh3MThwyNNDl.Enlm', N'Accountant', N'accountant');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Age', N'CreatedAt', N'Email', N'FirstName', N'IsBlocked', N'LastName', N'MonthlyIncome', N'PasswordHash', N'Role', N'Username') AND [object_id] = OBJECT_ID(N'[Users]'))
+    SET IDENTITY_INSERT [Users] OFF;
+2025-11-22 23:34:11.485 +04:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Loans_UserId] ON [Loans] ([UserId]);
+2025-11-22 23:34:11.489 +04:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Users_Email] ON [Users] ([Email]);
+2025-11-22 23:34:11.492 +04:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Users_Username] ON [Users] ([Username]);
+2025-11-22 23:34:11.494 +04:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20251122193342_InitialCreate', N'7.0.0');
+2025-11-22 23:36:33.560 +04:00 [INF] Loan API starting up...
+2025-11-22 23:36:33.699 +04:00 [INF] User profile is available. Using 'C:\Users\sergi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-22 23:36:33.716 +04:00 [INF] Creating key {c5bfa73a-fac7-44e2-a36d-b6753e0dc80b} with creation date 2025-11-22 19:36:33Z, activation date 2025-11-22 19:36:33Z, and expiration date 2026-02-20 19:36:33Z.
+2025-11-22 23:36:33.734 +04:00 [INF] Writing data to file 'C:\Users\sergi\AppData\Local\ASP.NET\DataProtection-Keys\key-c5bfa73a-fac7-44e2-a36d-b6753e0dc80b.xml'.
+2025-11-22 23:36:34.093 +04:00 [INF] Now listening on: https://localhost:7058
+2025-11-22 23:36:34.094 +04:00 [INF] Now listening on: http://localhost:5117
+2025-11-22 23:36:34.164 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-22 23:36:34.166 +04:00 [INF] Hosting environment: Development
+2025-11-22 23:36:34.167 +04:00 [INF] Content root path: C:\Users\sergi\source\repos\Loan API project\Loan API project
+2025-11-22 23:36:57.000 +04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5117/ - null null
+2025-11-22 23:36:57.302 +04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5117/ - 301 0 null 314.7226ms
+2025-11-22 23:36:57.317 +04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5117/index.html - null null
+2025-11-22 23:36:57.402 +04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5117/index.html - 200 null text/html;charset=utf-8 85.262ms
+2025-11-22 23:36:57.448 +04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5117/swagger-ui.css - null null
+2025-11-22 23:36:57.449 +04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5117/swagger-ui-bundle.js - null null
+2025-11-22 23:36:57.458 +04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5117/swagger-ui-standalone-preset.js - null null
+2025-11-22 23:36:57.472 +04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5117/_vs/browserLink - null null
+2025-11-22 23:36:57.475 +04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5117/_framework/aspnetcore-browser-refresh.js - null null
+2025-11-22 23:36:57.509 +04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5117/_framework/aspnetcore-browser-refresh.js - 200 16499 application/javascript; charset=utf-8 34.321ms
+2025-11-22 23:36:57.562 +04:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-11-22 23:36:57.562 +04:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2025-11-22 23:36:57.568 +04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5117/swagger-ui.css - 200 152034 text/css 119.9572ms
+2025-11-22 23:36:57.568 +04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5117/swagger-ui-standalone-preset.js - 200 230280 text/javascript 109.9399ms
+2025-11-22 23:36:57.579 +04:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2025-11-22 23:36:57.581 +04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5117/swagger-ui-bundle.js - 200 1456926 text/javascript 131.3391ms
+2025-11-22 23:36:57.634 +04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5117/_vs/browserLink - 200 null text/javascript; charset=UTF-8 164.7629ms
+2025-11-22 23:36:57.755 +04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5117/favicon-32x32.png - null null
+2025-11-22 23:36:57.760 +04:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2025-11-22 23:36:57.762 +04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5117/favicon-32x32.png - 200 628 image/png 6.8041ms
+2025-11-22 23:36:57.834 +04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5117/swagger/v1/swagger.json - null null
+2025-11-22 23:36:57.874 +04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5117/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 40.6447ms
+2025-11-22 23:37:45.994 +04:00 [INF] Request starting HTTP/1.1 POST http://localhost:5117/api/Auth/login - application/json 57
+2025-11-22 23:37:46.012 +04:00 [INF] Request finished HTTP/1.1 POST http://localhost:5117/api/Auth/login - 307 0 null 17.6176ms
+2025-11-22 23:38:12.814 +04:00 [INF] Request starting HTTP/1.1 POST http://localhost:5117/api/Auth/login - application/json 57
+2025-11-22 23:38:12.818 +04:00 [INF] Request finished HTTP/1.1 POST http://localhost:5117/api/Auth/login - 307 0 null 4.0612ms
+2025-11-22 23:39:04.677 +04:00 [INF] Request starting HTTP/1.1 POST http://localhost:5117/api/Auth/login - application/json 57
+2025-11-22 23:39:04.681 +04:00 [INF] Request finished HTTP/1.1 POST http://localhost:5117/api/Auth/login - 307 0 null 3.3534ms
+2025-11-22 23:45:02.570 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7058/ - null null
+2025-11-22 23:45:02.586 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7058/ - 301 0 null 16.195ms
+2025-11-22 23:45:02.639 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7058/index.html - null null
+2025-11-22 23:45:02.663 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7058/index.html - 200 null text/html;charset=utf-8 23.7745ms
+2025-11-22 23:45:02.824 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7058/swagger-ui.css - null null
+2025-11-22 23:45:02.824 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7058/swagger-ui-bundle.js - null null
+2025-11-22 23:45:02.826 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7058/swagger-ui-standalone-preset.js - null null
+2025-11-22 23:45:02.836 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7058/_vs/browserLink - null null
+2025-11-22 23:45:02.836 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7058/_framework/aspnetcore-browser-refresh.js - null null
+2025-11-22 23:45:02.864 +04:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-11-22 23:45:02.874 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7058/_framework/aspnetcore-browser-refresh.js - 200 16499 application/javascript; charset=utf-8 37.5335ms
+2025-11-22 23:45:02.882 +04:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2025-11-22 23:45:02.886 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7058/swagger-ui.css - 200 152034 text/css 62.2857ms
+2025-11-22 23:45:02.903 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7058/swagger-ui-standalone-preset.js - 200 230280 text/javascript 77.9755ms
+2025-11-22 23:45:02.911 +04:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2025-11-22 23:45:02.916 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7058/_vs/browserLink - 200 null text/javascript; charset=UTF-8 81.2268ms
+2025-11-22 23:45:02.918 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7058/swagger-ui-bundle.js - 200 1456926 text/javascript 93.8985ms
+2025-11-22 23:45:03.099 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7058/favicon-32x32.png - null null
+2025-11-22 23:45:03.104 +04:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2025-11-22 23:45:03.107 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7058/favicon-32x32.png - 200 628 image/png 8.47ms
+2025-11-22 23:45:03.159 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7058/swagger/v1/swagger.json - null null
+2025-11-22 23:45:03.202 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7058/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 42.3284ms
+2025-11-22 23:45:17.387 +04:00 [INF] Request starting HTTP/2 POST https://localhost:7058/api/Auth/login - application/json 57
+2025-11-22 23:45:17.395 +04:00 [INF] CORS policy execution successful.
+2025-11-22 23:45:17.561 +04:00 [INF] Executing endpoint 'Loan_API_project.Controllers.AuthController.Login (LoanApi)'
+2025-11-22 23:45:17.606 +04:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Loan_API_project.Models.DTO.LoginDto) on controller Loan_API_project.Controllers.AuthController (LoanApi).
+2025-11-22 23:45:20.931 +04:00 [INF] Executed DbCommand (82ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Age], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsBlocked], [u].[LastName], [u].[MonthlyIncome], [u].[PasswordHash], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__username_0
+2025-11-22 23:45:21.332 +04:00 [INF] User accountant logged in successfully
+2025-11-22 23:45:21.551 +04:00 [INF] Executing OkObjectResult, writing value of type 'Loan_API_project.Models.DTO.ApiResponse`1[[Loan_API_project.Models.DTO.LoginResponseDto, LoanApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-22 23:45:21.575 +04:00 [INF] Executed action Loan_API_project.Controllers.AuthController.Login (LoanApi) in 3961.9942ms
+2025-11-22 23:45:21.578 +04:00 [INF] Executed endpoint 'Loan_API_project.Controllers.AuthController.Login (LoanApi)'
+2025-11-22 23:45:21.591 +04:00 [INF] Request finished HTTP/2 POST https://localhost:7058/api/Auth/login - 200 null application/json; charset=utf-8 4204.2868ms
+2025-11-22 23:50:10.243 +04:00 [INF] Request starting HTTP/2 GET https://localhost:7058/api/Accountant/loans - null null
+2025-11-22 23:50:10.325 +04:00 [INF] Executing endpoint 'Loan_API_project.Controllers.AccountantController.GetAllLoans (LoanApi)'
+2025-11-22 23:50:10.331 +04:00 [INF] Route matched with {action = "GetAllLoans", controller = "Accountant"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllLoans() on controller Loan_API_project.Controllers.AccountantController (LoanApi).
+2025-11-22 23:50:10.466 +04:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[Id], [l].[Amount], [l].[CreatedAt], [l].[Currency], [l].[LoanType], [l].[Period], [l].[Status], [l].[UpdatedAt], [l].[UserId], [u].[Id], [u].[Age], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsBlocked], [u].[LastName], [u].[MonthlyIncome], [u].[PasswordHash], [u].[Role], [u].[Username]
+FROM [Loans] AS [l]
+INNER JOIN [Users] AS [u] ON [l].[UserId] = [u].[Id]
+ORDER BY [l].[CreatedAt] DESC
+2025-11-22 23:50:10.471 +04:00 [INF] Executing OkObjectResult, writing value of type 'Loan_API_project.Models.DTO.ApiResponse`1[[System.Collections.Generic.IEnumerable`1[[Loan_API_project.Models.DTO.LoanDto, LoanApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-22 23:50:10.493 +04:00 [INF] Executed action Loan_API_project.Controllers.AccountantController.GetAllLoans (LoanApi) in 160.4102ms
+2025-11-22 23:50:10.495 +04:00 [INF] Executed endpoint 'Loan_API_project.Controllers.AccountantController.GetAllLoans (LoanApi)'
+2025-11-22 23:50:10.497 +04:00 [INF] Request finished HTTP/2 GET https://localhost:7058/api/Accountant/loans - 200 null application/json; charset=utf-8 254.2593ms
